@@ -1,0 +1,58 @@
+# Values for chart: https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/values.yaml
+apiVersion: apps.gitlab.com/v1beta1
+kind: GitLab
+metadata:
+  name: gitlab
+spec:
+  chart:
+    version: "8.4.2"
+    values:
+      global:
+        hosts:
+          domain: gitlab.test-1.garden.garden-local.example.com # use a real domain here
+        edition: ce
+        # ingress:
+        #   apiVersion: ""
+        #   configureCertmanager: true
+        #   useNewIngressForCerts: false
+        #   provider: nginx
+        #   # class:
+        #   annotations: {}
+        #   enabled: true
+        #   tls: {}
+        #   #   enabled: true
+        #   #   secretName:
+        #   path: /
+        #   pathType: Prefix
+
+        # monitoring:
+        #   enabled: false
+        # ## Secret created according to https://docs.gitlab.com/charts/installation/secrets#initial-root-password
+        # initialRootPassword: {}
+
+        # psql:
+        #   connectTimeout:
+        #   keepalives:
+        #   keepalivesIdle:
+        #   keepalivesInterval:
+        #   keepalivesCount:
+        #   tcpUserTimeout:
+        #   password: {}
+        #     # useSecret:
+        #     # secret:
+        #     # key:
+        #     # file:
+        #   # host: postgresql.hostedsomewhere.else
+        #   # port: 123
+        #   # username: gitlab
+        #   # database: gitlabhq_production
+        #   # applicationName:
+        #   # preparedStatements: false
+        #   # databaseTasks: true
+
+      nginx-ingress:
+        enabled: false
+
+
+      # certmanager-issuer:
+      #   email: youremail@example.com # use your real email address here

@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ## Manual
+    cert.gardener.cloud/purpose: managed
+    dns.gardener.cloud/class: garden
+    dns.gardener.cloud/dnsnames: "*"
+
+    ## Default
+    acme.cert-manager.io/http01-edit-in-place: "true"
+    # cert-manager.io/issuer: gitlab-issuer
+    kubernetes.io/ingress.provider: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 512m
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "15"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/service-upstream: "true"
+  labels:
+    app: webservice
+    app.kubernetes.io/component: webservice
+    app.kubernetes.io/instance: gitlab-webservice
+    app.kubernetes.io/managed-by: gitlab-operator
+    app.kubernetes.io/name: gitlab
+    app.kubernetes.io/part-of: gitlab
+    chart: webservice-8.4.2
+    gitlab.com/webservice-name: default
+    heritage: Helm
+    release: gitlab
+  name: gitlab-webservice-default
+  namespace: gitlab-operator
+spec:
+  ingressClassName: gitlab-nginx
+  rules:
+  - host: gitlab.gitlab.test-1.garden.garden-local.example.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: gitlab-webservice-default
+            port:
+              number: 8181
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - gitlab.gitlab.test-1.garden.garden-local.example.com
+    secretName: gitlab-gitlab-tls

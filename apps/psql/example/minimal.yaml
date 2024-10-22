@@ -1,0 +1,21 @@
+# https://github.com/zalando/postgres-operator/blob/master/manifests/minimal-postgres-manifest.yaml
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: gitlab
+spec:
+  teamId: "gitlab"
+  volume:
+    size: 1Gi
+  numberOfInstances: 2
+  users:
+    zalando:  # database owner
+    - superuser
+    - createdb
+    gitlab: []  # role for application foo
+  databases:
+    gitlab: gitlab  # dbname: owner
+  preparedDatabases:
+    bar: {}
+  postgresql:
+    version: "16"

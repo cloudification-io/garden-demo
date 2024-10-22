@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitlab-operator
+  namespace: gitlab-operator
+spec:
+  releaseName: gitlab-operator
+  chart:
+    spec:
+      chart: gitlab-operator
+      sourceRef:
+        kind: HelmRepository
+        name: gitlab
+  interval: 50m
+  install:
+    remediation:
+      retries: 3
+  # Default values
+  # https://gitlab.com/gitlab-org/charts/gitlab/-/blob/master/values.yaml
+  # values:
+  #   global.edition=ce
