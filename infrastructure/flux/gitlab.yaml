@@ -5,7 +5,7 @@ metadata:
   name: gitlab
   namespace: flux-system
 spec:
-  interval: 10m0s
+  interval: 2m0s
   dependsOn:
     - name: infra-configs
   sourceRef:
@@ -14,4 +14,5 @@ spec:
   path: ./apps/gitlab
   prune: true
   wait: true
-  timeout: 5m0s
+  timeout: 2m0s
+  suspend: true
